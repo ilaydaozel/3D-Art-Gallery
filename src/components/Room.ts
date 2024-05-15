@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { createWindowsInTheWall } from './Window';
 
-const roomHeight = 30;
+const roomHeight = 40;
 
 const createFloor = (width: number, height: number) => {
   const planeGeometry = new THREE.PlaneGeometry(width, height);
@@ -63,11 +63,11 @@ const createAllWalls = (floorWidth: number, floorHeight: number) => {
   leftWall.position.x = -floorWidth / 2;
   leftWall.rotation.y = Math.PI / 2;
 
-  let rightWall: THREE.Mesh = createWall('#749091', floorHeight);
+  let rightWall: THREE.Mesh = createWall('#FFFFFF', floorHeight);
   let rightWallWithWindows: THREE.Mesh = createWindowsInTheWall(rightWall, [
     {
-      size: new THREE.Vector2(20, 15),
-      position: new THREE.Vector3(0, 15, 0),
+      size: new THREE.Vector2(25, 30),
+      position: new THREE.Vector3(20, 20, 0),
       lightDirection: new THREE.Vector3(0, 20, 30),
     },
   ]);
