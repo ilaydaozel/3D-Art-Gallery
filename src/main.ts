@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 import {createInitialRoomLight} from './Light'
 import {createRoom} from "./Room"
+import artworks from './data/artworks';
 
 //scene
 const scene = new THREE.Scene();
@@ -54,6 +55,26 @@ light.position.x = -15
 light.position.z = 0
 light.position.y = 20
 scene.add(light)
+
+const artworkPlanes = []
+let ZCount = -10;
+
+//import artworks from '../data/artworks';
+for (let i = 0; i < artworks.length; i++) {
+
+  const planeGeometry = new THREE.BoxGeometry(7, 7, 0.3)
+  const artTexture = new THREE.TextureLoader().load(artworks[i].url)
+  const artworkMaterial = new THREE.MeshPhongMaterial()
+  artworkMaterial.map = artTexture
+  const artwork = new THREE.Mesh(planeGeometry, artworkMaterial)
+  artwork.position.x = -19;
+  artwork.rotation.y = Math.PI / 2;
+  artwork.position.z = ZCount;
+  artwork.position.y = 7;
+  scene.add(artwork)
+  ZCount += 12;
+  artworkPlanes.push(artwork)
+}
 
 // movement controls
 const onKeyDown = function (event: KeyboardEvent) {
