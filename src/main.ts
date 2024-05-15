@@ -1,10 +1,11 @@
 import * as THREE from 'three'
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
-import {createDirectionalLightWithTarget, createInitialRoomLight} from './components/Light'
+import {createDirectionalLightWithTarget, createInitialRoomLight, createSpotlightWithTarget} from './components/Light'
 import {createRoom} from "./components/Room"
 import artworks from './data/artworks';
 import { createBoundingBoxOfGroup } from './components/BoundingBox';
 import { createMobileControls, createPointerLockControls } from './components/Controls';
+import { createAndHangPaintings } from './components/Painting';
 
 //scene
 const scene = new THREE.Scene();
@@ -16,7 +17,7 @@ const camera = new THREE.PerspectiveCamera(
   1000
 );
 camera.position.z = 0;
-camera.position.y = 5;
+camera.position.y = 15;
 scene.add(camera);
 
 //renderer
@@ -45,7 +46,7 @@ const controls = new PointerLockControls(camera, renderer.domElement)
 controls.addEventListener('lock', () => (menuPanel.style.display = 'none'))
 controls.addEventListener('unlock', () => (menuPanel.style.display = 'block'))
 
-const floorDimensions = { width: 40, height: 50 };
+const floorDimensions = { width: 80, height: 100 };
 const {ceiling, floor, walls } = createRoom(floorDimensions);
 scene.add(ceiling, floor, walls)
 
@@ -70,26 +71,10 @@ light.position.z = 0
 light.position.y = 20
 scene.add(light)
 
-const artworkPlanes = []
-let ZCount = -10;
-
-//import artworks from '../data/artworks';
-for (let i = 0; i < artworks.length; i++) {
-
-  const planeGeometry = new THREE.BoxGeometry(7, 7, 0.3)
-  const artTexture = new THREE.TextureLoader().load(artworks[i].url)
-  const artworkMaterial = new THREE.MeshPhongMaterial()
-  artworkMaterial.map = artTexture
-  const artwork = new THREE.Mesh(planeGeometry, artworkMaterial)
-  artwork.position.x = -19;
-  artwork.rotation.y = Math.PI / 2;
-  artwork.position.z = ZCount;
-  artwork.position.y = 7;
-  scene.add(artwork)
-  ZCount += 12;
-  artworkPlanes.push(artwork)
+const paintings = createAndHangPaintings(artworks, floorDimensions);
+for (let i = 0; i < paintings.length; i++) {
+  scene.add(paintings[i]);
 }
-
 const onWindowResize = () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
