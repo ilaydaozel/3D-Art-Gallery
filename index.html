@@ -40,12 +40,53 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
             }
+            #movementIconsMenu {
+              position: absolute;
+              bottom: 10px;
+              left: 50%;
+              transform: translateX(-50%);
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              gap: 5px;
+            }
+            .movement-icon {
+              width: 50px;
+              height: 50px;
+              background-color: rgba(0, 0, 0, 0.5);
+              color: white;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 24px;
+              border-radius: 10%;
+              user-select: none;
+              cursor: pointer;
+            }
+            .movement-icon:active {
+              background-color: rgba(0, 0, 0, 0.7);
+            }
+            .horizontal {
+              display: flex;
+              justify-content: center;
+              width: 100%;
+              gap: 5px;
+            }
     </style>
   </head>
   <body>
     <div id="menuPanel">
       <button id="startButton">Click to Start</button>
     </div>  
+    <div id="movementIconsMenu">
+      <div id="iconUp" class="movement-icon">↑</div>
+      <div class="horizontal">
+        <div id="iconLeft" class="movement-icon">←</div>
+        <div id="iconDown" class="movement-icon">↓</div>
+        <div id="iconRight" class="movement-icon">→</div>
+      </div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
