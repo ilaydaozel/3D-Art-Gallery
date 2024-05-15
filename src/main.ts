@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
-import {createInitialRoomLight} from './Light'
-import {createRoom} from "./Room"
+import {createInitialRoomLight} from './components/Light'
+import {createRoom} from "./components/Room"
 import artworks from './data/artworks';
 
 //scene
