@@ -1,8 +1,10 @@
 import * as THREE from 'three'
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
-import {createInitialRoomLight} from './components/Light'
+import {createDirectionalLightWithTarget, createInitialRoomLight} from './components/Light'
 import {createRoom} from "./components/Room"
 import artworks from './data/artworks';
+import { createBoundingBoxOfGroup } from './components/BoundingBox';
+import { createMobileControls, createPointerLockControls } from './components/Controls';
 
 //scene
 const scene = new THREE.Scene();
@@ -47,6 +49,18 @@ const floorDimensions = { width: 40, height: 50 };
 const {ceiling, floor, walls } = createRoom(floorDimensions);
 scene.add(ceiling, floor, walls)
 
+createDirectionalLightWithTarget(
+  walls.children[2],
+  new THREE.Vector3(-40, 20, 0)
+);
+
+const roomBoundingBox: THREE.Box3[] = createBoundingBoxOfGroup(walls);
+const isMobileDevice =
+'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+const updateMovement = isMobileDevice
+? createMobileControls(camera, renderer, roomBoundingBox)
+: createPointerLockControls(camera, roomBoundingBox);
 
 const light = new THREE.SpotLight(0xFF000F, 1, 1, 1, 0.8, 1)
 //renderer.shadowMap.enabled = true
@@ -76,40 +90,19 @@ for (let i = 0; i < artworks.length; i++) {
   artworkPlanes.push(artwork)
 }
 
-// movement controls
-const onKeyDown = function (event: KeyboardEvent) {
-  switch (event.code) {
-      case 'KeyW':
-          controls.moveForward(0.25)
-          break
-      case 'KeyA':
-          controls.moveRight(-0.25)
-          break
-      case 'KeyS':
-          controls.moveForward(-0.25)
-          break
-      case 'KeyD':
-          controls.moveRight(0.25)
-          break
-  }
-}
-document.addEventListener('keydown', onKeyDown, false)
+const onWindowResize = () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+};
+window.addEventListener('resize', onWindowResize, false);
 
-window.addEventListener('resize', onWindowResize, false)
-function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight
-    camera.updateProjectionMatrix()
-    renderer.setSize(window.innerWidth, window.innerHeight)
-    render()
-}
-
-function animate() {
-    requestAnimationFrame(animate)
-    render()
-}
-
-function render() {
-    renderer.render(scene, camera)
-}
-
-animate()
+// Render with animation
+const clock = new THREE.Clock();
+const renderLoop = () => {
+  requestAnimationFrame(renderLoop);
+  const delta = clock.getDelta();
+  updateMovement(delta);
+  renderer.render(scene, camera);
+};
+renderLoop();
