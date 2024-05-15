@@ -21,8 +21,8 @@ const artworks: IArtwork[] = [
         description: "A portrait painting that's one of the most famous artworks in the world.",
         creationYear: "1503",
         medium: "Oil on poplar panel",
-        width: 77,
-        height: 53,
+        width: 50,
+        height: 70,
         url: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/40664f196884511.66277dacb0d49.jpg"
     },
     {
@@ -33,8 +33,8 @@ const artworks: IArtwork[] = [
         description: "A masterpiece of Post-Impressionist art.",
         creationYear: "1889",
         medium: "Oil on canvas",
-        width: 73.7,
-        height: 92.1,
+        width: 50,
+        height: 70,
         url: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/f27f0d196884511.66277dacb13c7.jpg"
     },
     // Add more artworks here...
