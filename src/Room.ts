@@ -42,43 +42,7 @@ const createCeiling = (width: number, height: number) => {
 };
 
 
-/*
-//Create the walls
-const wallGroup = new THREE.Group(); //create a group to hold the walls
-scene.add(wallGroup);
-
-//Front wall
-const frontWall = new THREE.Mesh(
-    new THREE.BoxGeometry(40, 20, 0.001),
-    new THREE.MeshLambertMaterial({ color: '#f2f2f2' })
-)
-frontWall.position.z = -25;
-frontWall.position.y = 10;
-
-//Left wall
-const leftWall = new THREE.Mesh(
-    new THREE.BoxGeometry(50, 20, 0.001),
-    new THREE.MeshLambertMaterial({ color: '#f9f9f9' })
-)
-
-leftWall.position.x = -20;
-leftWall.position.y = 10;
-leftWall.rotation.y = Math.PI / 2;
-
-//Right wall
-const rightWall = new THREE.Mesh(
-    new THREE.BoxGeometry(50, 20, 0.001),
-    new THREE.MeshLambertMaterial({ color: '#f9f9f9' })
-)
-
-rightWall.position.x = 20;
-rightWall.rotation.y = Math.PI / 2;
-rightWall.position.y = 10;
-wallGroup.add(frontWall, leftWall, rightWall);
-
-*/
-
-export const createWall = (wallColor: string, width: number) => {
+const createWall = (wallColor: string, width: number) => {
   const wall = new THREE.Mesh(
     new THREE.BoxGeometry(width, roomHeight, 1),
     new THREE.MeshLambertMaterial({ color: wallColor })
