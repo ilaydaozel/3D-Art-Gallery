@@ -24,6 +24,7 @@ const subtractTheHoleFromTheWall = (wall: THREE.Mesh, hole: THREE.Mesh) => {
   return wallWithHole;
 };
 
+/*
 const createFrame = (size: THREE.Vector2, width: number) => {
   let shape = new THREE.Shape([
     new THREE.Vector2(0, 0),
@@ -48,6 +49,7 @@ const createFrame = (size: THREE.Vector2, width: number) => {
 
   return frame;
 };
+*/
 
 const createGlass = (size: THREE.Vector2) => {
   const iceBlue = '#d3f2f5';

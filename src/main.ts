@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
-import {createDirectionalLightWithTarget, createInitialRoomLight, createSpotlightWithTarget} from './components/Light'
+import {createDirectionalLightWithTarget, createInitialRoomLight} from './components/Light'
 import {createRoom} from "./components/Room"
 import artworks from './data/artworks';
 import { createBoundingBoxOfGroup } from './components/BoundingBox';
