@@ -55,6 +55,25 @@ light.position.z = 0
 light.position.y = 20
 scene.add(light)
 
+// movement controls
+const onKeyDown = function (event: KeyboardEvent) {
+  switch (event.code) {
+      case 'KeyW':
+          controls.moveForward(0.25)
+          break
+      case 'KeyA':
+          controls.moveRight(-0.25)
+          break
+      case 'KeyS':
+          controls.moveForward(-0.25)
+          break
+      case 'KeyD':
+          controls.moveRight(0.25)
+          break
+  }
+}
+document.addEventListener('keydown', onKeyDown, false)
+
 window.addEventListener('resize', onWindowResize, false)
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight
