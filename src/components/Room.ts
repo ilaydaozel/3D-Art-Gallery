@@ -6,7 +6,7 @@ const roomHeight = 30;
 const createFloor = (width: number, height: number) => {
   const planeGeometry = new THREE.PlaneGeometry(width, height);
   const floorTexture = new THREE.TextureLoader().load(
-    'public/img/marmer.jpg'
+    '/img/marmer.jpg'
   );
   floorTexture.wrapS = THREE.RepeatWrapping;
   floorTexture.wrapT = THREE.RepeatWrapping;
@@ -26,7 +26,7 @@ const createFloor = (width: number, height: number) => {
 
 const createCeiling = (width: number, height: number) => {
   const ceilingTexture = new THREE.TextureLoader().load(
-    'public/img/textureWall.jpg'
+    '/img/textureWall.jpg'
   );
   ceilingTexture.wrapS = THREE.RepeatWrapping;
   ceilingTexture.wrapT = THREE.RepeatWrapping;
