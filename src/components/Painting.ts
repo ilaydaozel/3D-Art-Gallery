@@ -144,9 +144,13 @@ export const createAndHangPaintings = (
         painting.rotation.y = Math.PI / 2;
         break;
       case 2:
-        // Back wall
+        // Back wall — rotate 180° so the painting's front face (and the
+        // frame sitting behind it) point into the room, same convention as
+        // the other three walls. Without this the frame ends up facing the
+        // room and completely hides the artwork behind it.
         positionX = floorWidth / 2 - currentWallLength - distanceBetween;
         positionZ = floorHeight / 2 - paintingDepth;
+        painting.rotation.y = Math.PI;
         break;
       case 3:
         // right wall
