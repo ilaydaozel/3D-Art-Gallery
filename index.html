@@ -88,6 +88,10 @@
         border: none;
         border-radius: 8px;
         cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
         transition:
           transform 0.15s ease,
           box-shadow 0.15s ease;
@@ -209,6 +213,9 @@
         justify-content: center;
         align-items: center;
         gap: 5px;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
       }
 
       .movement-icon {
@@ -222,6 +229,11 @@
         font-size: 24px;
         border-radius: 10%;
         user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: none;
         cursor: pointer;
       }
 
@@ -235,8 +247,40 @@
         width: 100%;
         gap: 5px;
       }
+
+      @media (max-width: 480px), (max-height: 480px) {
+        #menuCard {
+          width: min(88vw, 340px);
+          padding: 26px 22px 20px;
+          border-radius: 12px;
+        }
+        #menuTitle {
+          font-size: 26px;
+          margin: 0 0 8px;
+        }
+        #menuSubtitle {
+          font-size: 12.5px;
+          line-height: 1.45;
+          margin: 0 0 18px;
+        }
+        #startButton {
+          padding: 11px 16px;
+          font-size: 13px;
+        }
+        #menuHint {
+          margin-top: 14px;
+          font-size: 11px;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+        .movement-icon {
+          width: 42px;
+          height: 42px;
+          font-size: 20px;
+        }
+      }
     </style>
-    <script type="module" crossorigin src="./assets/index-B8VhQ4Ew.js"></script>
+    <script type="module" crossorigin src="./assets/index-S8RHxLX5.js"></script>
   </head>
   <body>
     <div id="menuPanel">
