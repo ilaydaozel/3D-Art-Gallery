@@ -128,6 +128,3 @@ const renderLoop = () => {
   renderer.render(scene, camera);
 };
 renderLoop();
-
-// @ts-expect-error TEMP QA DEBUG HOOK - remove before finishing
-window.__qa = { camera, scene, paintings, renderer, walls };
