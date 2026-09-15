@@ -24,46 +24,61 @@ const subtractTheHoleFromTheWall = (wall: THREE.Mesh, hole: THREE.Mesh) => {
   return wallWithHole;
 };
 
-/*
-const createFrame = (size: THREE.Vector2, width: number) => {
-  let shape = new THREE.Shape([
-    new THREE.Vector2(0, 0),
-    new THREE.Vector2(size.x, 0),
-    new THREE.Vector2(size.x, size.y),
-    new THREE.Vector2(0, size.y),
-  ]);
+const frameBarThickness = 1.6;
+const frameBarDepth = 1.2;
+const mullionThickness = 1;
 
-  let hole = new THREE.Path([
-    new THREE.Vector2(width, width),
-    new THREE.Vector2(width, size.y - width),
-    new THREE.Vector2(size.x - width, size.y - width),
-    new THREE.Vector2(size.x - width, width),
-  ]);
-  shape.holes.push(hole);
-  let shapeGeometry = new THREE.ShapeGeometry(shape);
+// A bronze window frame with a cross mullion, built from simple bars so it
+// reads as a proper architectural window rather than a bare glass hole.
+const createWindowFrame = (size: THREE.Vector2) => {
+  const frameMaterial = new THREE.MeshStandardMaterial({
+    color: 0x8a6d3b,
+    metalness: 0.55,
+    roughness: 0.35,
+  });
+  const halfW = size.x / 2;
+  const halfH = size.y / 2;
 
-  var frame = new THREE.Mesh(
-    shapeGeometry,
-    new THREE.MeshLambertMaterial({ color: 0xebe2d3, side: THREE.DoubleSide })
-  );
+  const bars = [
+    // top / bottom
+    { w: size.x + frameBarThickness, h: frameBarThickness, x: 0, y: halfH + frameBarThickness / 2 },
+    { w: size.x + frameBarThickness, h: frameBarThickness, x: 0, y: -halfH - frameBarThickness / 2 },
+    // left / right
+    { w: frameBarThickness, h: size.y + frameBarThickness, x: -halfW - frameBarThickness / 2, y: 0 },
+    { w: frameBarThickness, h: size.y + frameBarThickness, x: halfW + frameBarThickness / 2, y: 0 },
+    // cross mullions
+    { w: mullionThickness, h: size.y, x: 0, y: 0 },
+    { w: size.x, h: mullionThickness, x: 0, y: 0 },
+  ];
 
-  return frame;
+  const group = new THREE.Group();
+  for (const bar of bars) {
+    const mesh = new THREE.Mesh(
+      new THREE.BoxGeometry(bar.w, bar.h, frameBarDepth),
+      frameMaterial
+    );
+    mesh.position.set(bar.x, bar.y, 0);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    group.add(mesh);
+  }
+  return group;
 };
-*/
 
 const createGlass = (size: THREE.Vector2) => {
-  const iceBlue = '#d3f2f5';
+  const paleSky = '#eaf6f8';
   const glassGeometry = new THREE.BoxGeometry(size.x, size.y, 0.5);
   const glassMaterial = new THREE.MeshPhysicalMaterial({
-    color: iceBlue,
+    color: paleSky,
     transparent: true,
-    opacity: 0.7,
-    transmission: 0.6,
-    roughness: 0.6,
+    opacity: 0.5,
+    transmission: 0.8,
+    roughness: 0.1,
     ior: 1.5,
   });
 
   const glass = new THREE.Mesh(glassGeometry, glassMaterial);
+  glass.add(createWindowFrame(size));
   return glass;
 };
 
