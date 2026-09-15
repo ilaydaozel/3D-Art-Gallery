@@ -33,18 +33,37 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 // Initial Light
 createInitialRoomLight(scene);
 
+const isMobileDevice =
+  'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
 // add event listeners for menu
 const menuPanel = document.getElementById('menuPanel') as HTMLDivElement
 const startButton = document.getElementById('startButton') as HTMLButtonElement
 const loadingBarTrack = document.getElementById('loadingBarTrack') as HTMLDivElement
 const loadingBarFill = document.getElementById('loadingBarFill') as HTMLDivElement
-startButton.addEventListener(
+const menuHint = document.getElementById('menuHint') as HTMLDivElement
+const movementIconsMenu = document.getElementById('movementIconsMenu') as HTMLDivElement
+
+// Pointer Lock isn't available on mobile browsers, so the desktop "lock the
+// mouse" flow never fires and the welcome screen would otherwise never go
+// away. On touch devices just hide the menu directly instead.
+if (isMobileDevice) {
+  menuHint.textContent = 'Drag to look around · use the arrows to move';
+  startButton.addEventListener(
+    'click',
+    () => (menuPanel.style.display = 'none'),
+    false
+  );
+} else {
+  movementIconsMenu.style.display = 'none';
+  startButton.addEventListener(
     'click',
     function () {
         controls.lock()
     },
     false
-)
+  );
+}
 const controls = new PointerLockControls(camera, renderer.domElement)
 controls.addEventListener('lock', () => (menuPanel.style.display = 'none'))
 controls.addEventListener('unlock', () => (menuPanel.style.display = 'flex'))
@@ -74,8 +93,6 @@ createDirectionalLightWithTarget(
 createTrackLighting(scene, floorDimensions, roomHeight);
 
 const roomBoundingBox: THREE.Box3[] = createBoundingBoxOfGroup(walls);
-const isMobileDevice =
-'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 const updateMovement = isMobileDevice
 ? createMobileControls(camera, renderer, roomBoundingBox)
